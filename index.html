@@ -5,7 +5,7 @@
   <!-- A touch painting game: no pinch-zoom (a two-finger drag must paint, not zoom the page), no rubber-band scroll. -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#F5EDDA">
-  <title>Spray _ Peel</title>
+  <title>Spray &amp; Peel</title>
   <style>
     /* Spray & Peel web play (ColorBloomBuild.BuildWebGL). The game lays itself out for a portrait phone, so on a wide
        window the canvas keeps the window's HEIGHT and at most 9:16 of width, centred on the game's cream (the clean
@@ -39,7 +39,7 @@
   <div id="stage">
     <div id="shell">
       <canvas id="unity-canvas" tabindex="-1"></canvas>
-      <div id="boot"><div id="name">Spray _ Peel</div><div id="bar"><div id="fill"></div></div><div id="pct">0%</div></div>
+      <div id="boot"><div id="name">Spray &amp; Peel</div><div id="bar"><div id="fill"></div></div><div id="pct">0%</div></div>
       <div id="err"></div>
     </div>
   </div>
@@ -53,6 +53,11 @@
       companyName: "Supercent",
       productName: "Spray _ Peel",
       productVersion: "0.1.0",
+      // every file the game writes under persistentDataPath (outgame.json, the sketchbook index and prints) reaches IndexedDB
+      // on its own — without it only a later PlayerPrefs.Save flushed them, so a reload lost stars, prints and seen popups
+      // (batch1, bug hunt D1). (Unity substitutes "&" in PRODUCT_NAME with "_": the visible name is written literally above,
+      // productName stays as it is — it keys the IndexedDB / cache paths.)
+      autoSyncPersistentDataPath: true,
       // phones report 3x; the game draws a full-screen paint composite every frame, 2x is plenty and keeps it cool
       devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
       // an error is shown, never swallowed: a silent failure looks exactly like "still loading"
